@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <title>
+            Lists
+        </title>
+		<script 
+            src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+        </script>
+	</head>
+	<body>
+		<select size = "10" id = "left">
+			<option value = "item1">1</option>
+			<option value = "item2">2</option>
+			<option value = "item3">3</option>
+			<option value = "item4">4</option>
+			<option value = "item5">5</option>
+		</select>
+		<select size = "10" id = "right">
+			<option value = "item1">6</option>
+			<option value = "item2">7</option>
+			<option value = "item3">8</option>
+			<option value = "item4">9</option>
+			<option value = "item5">10</option>
+		</select>
+		<script>
+			$('#left').dblclick(function() {
+				return !$('#left option:selected').remove().appendTo('#right');
+			});
+			$('#right').dblclick(function() {
+				return !$('#right option:selected').remove().appendTo('#left');
+			});
+		</script>
+	</body>
+</html>

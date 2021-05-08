@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+            <title>
+                Tabel sorted 
+            </title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+        </script>
+		<style>
+			th, td {
+				text-align: left;
+				padding: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<table id="table1">
+			<tr>
+				<th>Fructe</th>
+				<th>Mere</th>
+				<th>Pere</th>
+				<th>Caise</th>
+			</tr>
+			<tr>
+				<th>Pret</th>
+				<td>3</td>
+				<td>4</td>
+				<td>2</td>
+			</tr>
+			<tr>
+				<th>Cantitate</th>
+				<td>8</td>
+				<td>6</td>
+				<td>5</td>
+			</tr>
+			<tr>
+				<th>Calitate</th>
+				<td>1</td>
+				<td>2</td>
+				<td>0</td>
+		</table>
+		<br>
+		<table id="table2">
+			<tr>
+				<th>10</th>
+				<th>Mere</th>
+				<th>Pere</th>
+				<th>Alune</th>
+			</tr>
+			<tr>
+				<th>20</th>
+				<td>Alune</td>
+				<td>Coacaze</td>
+				<td>Banane</td>
+			</tr>
+			<tr>
+				<th>30</th>
+				<td>Cirese</td>
+				<td>Visine</td>
+				<td>Raci</td>
+			</tr>
+			<th>40</th>
+				<td>Z</td>
+				<td>X</td>
+				<td>Y</td>
+		</table>
+
+		<script>
+			function register(tableID, number)
+			{
+				var table = document.getElementById(tableID);
+				var cells = table.getElementsByTagName('th');
+
+				for (var i = 0; i < cells.length; i++) {
+					cells[i].addEventListener("click", function() {
+						clickedItem(this, number);
+					});
+				}
+			}
+
+			function clickedItem(table, number) {
+				sortTable(table.parentNode.parentNode, table.cellIndex, number);
+			}
+
+			function compare(x, y) {
+				if(/^[a-zA-Z]+$/.test(x) && /^[a-zA-Z]+$/.test(y)) {
+					if (x > y) return true;
+				}
+				else {
+					if (Number(x) > Number(y)) return true;
+				}
+				return false;
+			}
+
+			function sortTable(table, n, number) 
+			{
+				var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+				switching = true;
+				dir = "asc";
+				while (switching) {
+					switching = false;
+					rows = table.getElementsByTagName("tr");
+					for (i = 1; i < (rows.length - 1); i++) {
+						shouldSwitch = false;
+						x = rows[i].getElementsByTagName("TD")[n];
+						y = rows[i + 1].getElementsByTagName("TD")[n];
+						if (dir == "asc") {
+							if (!number) {
+								var a = $(x).html().toLowerCase();
+								var b = $(y).html().toLowerCase()
+								if (a > b) {
+									shouldSwitch = true;
+									break;
+								}
+							}
+							else {
+								if (compare(x.innerHTML,y.innerHTML)) {
+									shouldSwitch = true;
+									break;
+								}
+							}
+						} 
+						else if (dir == "desc") {
+							if (!number) {
+								var a = $(x).html().toLowerCase();
+								var b = $(y).html().toLowerCase()
+								if (a < b)  {
+									shouldSwitch = true;
+									break;
+								}
+							}
+							else {
+								if (compare(y.innerHTML, x.innerHTML)) {
+									shouldSwitch = true;
+									break;
+								}
+							}
+						}
+					}
+					if (shouldSwitch) {
+						rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+						switching = true;
+						switchcount++;
+					} 
+					else {
+						if (switchcount == 0 && dir == "asc") {
+							dir = "desc";
+							switching = true;
+						}
+					}
+				}
+			}
+		</script>
+
+		<script>
+			register("table1", false);
+			register("table2", true);
+		</script>
+
+	</body>
+</html>
