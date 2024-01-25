@@ -1,4 +1,4 @@
-#
+# web-pages-jquery
 Web pages developed in HTML (Hyper Text Markup Language) and jQuery, a JavaScript library.
 
 The project contains 5 folders with different simple web pages, such as:
