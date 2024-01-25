@@ -1,4 +1,4 @@
-# web-pages-jquery
+# web-pages-javascript
 Web pages developed in HTML (Hyper Text Markup Language), jQuery (JavaScript library) and JavaScript.
 
 The project contains 2 versions (jQuery and JavaScript) for the web pages:
