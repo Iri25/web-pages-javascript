@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <title>
+            Lists
+        </title>
+		<script type="text/javascript">
+			function move(item, select, index) {
+				if (select == 1) {
+					var second = document.getElementById("second");
+					var first = document.getElementById("first");
+					var option = document.createElement("option");
+					option.text = item;
+					second.add(option);
+					first.remove(index);
+				}
+				if (select == 2) {
+					var first = document.getElementById("first");
+					var second = document.getElementById("second");
+					var option = document.createElement("option");
+					option.text = item;
+					first.add(option);
+					second.remove(index);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<select id="first" style="height:200px" multiple="multiple" ondblclick="move(this.options[this.selectedIndex].text, 1, this.selectedIndex)">
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+		<select id="second" style="height:200px" multiple="multiple" ondblclick="move(this.options[this.selectedIndex].text, 2, this.selectedIndex)">
+			<option>6</option>
+			<option>7</option>
+			<option>8</option>
+			<option>9</option>
+			<option>10</option>
+		</select>
+	</body>
+</html>

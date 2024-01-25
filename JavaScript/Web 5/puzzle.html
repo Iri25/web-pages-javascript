@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+            <title>
+                Puzzle
+            </title>
+		<style>
+			td {
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body>	
+		<table id="tabel"></table>
+		<script>
+			var currentX, currentY;
+
+			function generate() {
+				var table = document.getElementById(tableID);
+				var output = ''; var cellID = 0;
+
+				for (var i = 1; i <= n; i++) {
+					output += '<tr>\n';
+					for (var j = 1; j <= n; j++) {
+						output += '<td id="tile_' + cellID + '">' + cellID + '</td>';						
+						cellID++;
+					}
+					output += '</tr>\n';
+				}
+				table.innerHTML = output;
+			}
+
+			function clearOne() {
+				var table = document.getElementById(tableID);
+				var randomPos = Math.floor(Math.random() * n * n);
+				console.log(randomPos);
+				var cell = document.getElementById("tile_" + randomPos);
+				cell.innerHTML = "";
+				currentY = Math.floor(randomPos/n);
+				currentX = randomPos % n;
+				console.log(currentY + " " + currentX);
+			}
+
+			function shuffle() {
+				var table = document.getElementById(tableID);
+				var cells = table.getElementsByTagName('td');
+				var i = cells.length;
+				while (--i > 0) {
+					var j = Math.floor(Math.random() * (i+1));
+					var temp = cells[j].innerHTML;
+					cells[j].innerHTML = cells[i].innerHTML;
+					cells[i].innerHTML = temp;
+                    if (cells[i].innerHTML == 0){
+                        cells[i].innerHTML = 1;
+                    }
+				}
+			}
+
+			function getCellAt(x, y) {
+				var table = document.getElementById(tableID);
+				var cells = table.getElementsByTagName('td');
+				var i = cells.length;
+				while(--i >= 0) {
+					if (cells[i].id == ("tile_" + (y*n+x))) {
+						return cells[i];
+					}
+				}
+			}
+
+			function swap(x, y) {
+				var current = getCellAt(currentX, currentY); 
+				var destination = getCellAt(x, y);
+				var temp = current.innerHTML;
+				current.innerHTML = destination.innerHTML;
+				destination.innerHTML = temp;
+			}
+			
+			document.onkeydown = checkKey;
+			function checkKey(e) {
+
+				e = e || window.event;
+
+				if (e.keyCode == '38')  {
+					if (currentY - 1 >= 0) {
+						swap(currentX, currentY - 1);
+						currentY -= 1;
+					}
+				}
+				else if (e.keyCode == '40') {
+					if (currentY + 1 < n) {
+						swap(currentX, currentY + 1);
+						currentY += 1;
+					}
+				}
+				else if (e.keyCode == '37') {
+					if (currentX - 1 >= 0) {
+						swap(currentX - 1, currentY);
+						currentX -= 1;
+					}
+				}
+				else if (e.keyCode == '39') {
+				   if (currentX + 1 < n) {
+						swap(currentX + 1, currentY);
+						currentX += 1;
+					}
+				}
+			}
+		</script>
+		<script>
+			var n = 3;
+			var tableID = "tabel";
+			generate(n);
+			shuffle(n);
+			clearOne(n);
+		</script>
+	</body>
+</html>

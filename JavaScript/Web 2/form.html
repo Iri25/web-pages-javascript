@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ro">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <title>
+            Form
+        </title>
+		<script>
+			function number(string) {
+				return !/\D/.test(string);
+			}
+			function validate() {
+				var nume = document.forms["form"]["nume"].value;
+				var data = document.forms["form"]["dataNastere"].value;
+				var varsta = document.forms["form"]["varsta"].value;
+				var email = document.forms["form"]["email"].value;
+				var ok = 1;
+
+				if (nume.length < 10) {
+					alert("Nume invalid");
+					document.forms["form"]["nume"].style.border = "thick solid #FF0000"
+					ok = 0;
+				}
+
+				if (!/^\d{1,2}\.\d{1,2}\.\d{2,4}$/.test(data)) {
+					alert("Data este invalida.");
+					document.forms["form"]["dataNastere"].style.border = "thick solid #FF0000"
+					return false;
+				}
+
+				if (!number(varsta) || varsta > 100 || varsta < 0) {
+					alert("Varsta invalida");
+					document.forms["form"]["varsta"].style.border = "thick solid #FF0000"
+					ok = 0;
+				}
+
+				if (!/^.{1,20}@.{1,10}\..{1,5}$/.test(email))
+				{
+					alert("Email invalid");
+					document.forms["form"]["email"].style.border = "thick solid #FF0000"
+					ok = 0;
+				}
+
+				if (ok == 0) return false;
+				else {
+					alert("Valid!");
+					return true;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<form name="form" onsubmit="return validate()" method="post">
+			Nume <input name="nume" required><br>
+			Data nașterii <input name="dataNastere" required><br>
+			Vârsta <input name="varsta" required><br>
+			E-mail <input name="email" required><br>
+			<input type="submit">
+		</form>
+	</body>
+</html>

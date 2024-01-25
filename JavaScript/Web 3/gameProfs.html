@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+            <title>
+                Game
+            </title>
+        <style>
+			div#board {
+				border: solid;
+				width: 690px;
+				height: 540px;
+				padding: 24px;
+				margin: auto;
+			}
+			div#board > div {
+				border: solid;
+				width: 71px;
+				height: 71px;
+				float: left;
+				margin: 10px;
+				padding: 20px;
+				font-size: 1px;
+				cursor: pointer;
+				text-align: center;
+			}
+		</style>
+
+		<script>
+			var array = ['A','A','B','B','C','C','D','D','E','E','F','F','G','G','H','H','I','I','J','J'];
+			var values = [];
+			var tile_ids = [];
+			var tiles_flipped = 0;
+
+			Array.prototype.tile_shuffle = function() {
+				for (var i = this.length - 1; i > 0; i--) {
+					var j = Math.floor(Math.random() * (i + 1));
+					var temp = this[j];
+					this[j] = this[i];
+					this[i] = temp;
+				}
+			}
+
+			function getPhoto(e)
+			{
+				if (e == "A")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Czibula-Gabriela.jpg";
+				}
+				else if (e == "B")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Czibula-Istvan.jpg";
+				}
+				else if (e == "C")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Diosan-Laura.jpg";
+				}
+				else if (e == "D")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Grigoreta-Cojocar.jpg";
+				}
+				else if (e == "E")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Bufnea-Darius.jpg";
+				}
+				else if (e == "F")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Marian-Zsuzsanna.jpg";
+				}
+				else if (e == "G")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Mihis-Andreea.jpg";
+				}
+				else if (e == "H")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Serban-Camelia.jpg";
+				}
+				else if (e == "I")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Suciu-Mihai.jpg";
+				}
+				else if (e == "J")
+				{
+					return "http://www.cs.ubbcluj.ro/wp-content/uploads/Sabina-Surdu.jpg";
+				}
+			}
+
+			function newBoard() {
+				tiles_flipped = 0;
+				var output = '';
+				array.tile_shuffle();
+				for (var i = 0; i < array.length; i++) {
+					output += '<div id="tile_' + i + '" onclick="flipTile(this,\'' + array[i] + '\')"></div>';
+				}
+				document.getElementById('board').innerHTML = output;
+			}
+
+			function flipTile(tile, value) {
+				if (tile.innerHTML == "" && values.length < 2) {
+					tile.style.background = "url("+getPhoto(value)+") no-repeat";
+					tile.innerHTML = value;
+					if (values.length == 0) {
+						values.push(value);
+						tile_ids.push(tile.id);
+					}
+					else if(values.length == 1) {
+						values.push(value);
+						tile_ids.push(tile.id);
+						if (values[0] == values[1]) {
+							tiles_flipped += 2;
+							values = [];
+							tile_ids = [];
+							if (tiles_flipped == array.length) {
+								alert("Good job!");
+								document.getElementById('board').innerHTML = "";
+								newBoard();
+							}
+						}
+						else {
+							function flipBack() {
+								var tile1 = document.getElementById(tile_ids[0]);
+								var tile2 = document.getElementById(tile_ids[1]);
+								tile1.innerHTML = "";
+								tile1.style.background = "#FFFFFF"
+								tile2.innerHTML = "";
+								tile2.style.background = "#FFFFFF"
+								values = [];
+								tile_ids = [];
+							}
+							setTimeout(flipBack, 700);
+						}
+					}
+				}
+			}
+
+		</script>
+
+	</head>
+	<body>
+		<div id="board"></div>
+		<script>newBoard();</script>
+	</body>
+</html>
